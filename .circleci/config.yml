@@ -8,14 +8,14 @@ jobs:
       name: node/default
     steps:
       - checkout
-
+      
   acceptance_test_1:
     executor:
       name: node/default
-   steps:
+    steps:
       - checkout
       - node/install-packages:
-        app-dir: ./server
+          app-dir: ./server
       - run:
           command: npm install
           working_directory: ./server
@@ -27,21 +27,20 @@ jobs:
     executor:
       name: node/default
     steps:
-      - checkout:
+      - checkout
       - run:
           command: npm install
           working_directory: ./client
       - run:
           command: npm test
           working_directory: ./client
-  workflows:
-      build-and-test:
-        jobs:
-          - build
-          - acceptance_test_1:
-              requires:
-                - build
-          - acceptance_test_2:
-              requires:
-                - build
-         
+workflows:
+    build-and-test:
+      jobs:
+        - build
+        - acceptance_test_1:
+            requires:
+              - build
+        - acceptance_test_2:
+            requires:
+              - build
